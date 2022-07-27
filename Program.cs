@@ -1,11 +1,23 @@
+using Microsoft.EntityFrameworkCore;
+using RestaurantRaterAPI;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+static IHostBuilder CreateHostBuilder(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+.ConfigureWebHostDefaults(webBuilder =>
+        {
+            webBuilder.UseUrls("http://localhost:5221", "https://localhost:7229");
+        });
 
+builder.Services.AddHttpsRedirection(options => options.HttpsPort = 7229);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<RestaurantDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
@@ -23,3 +35,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
