@@ -31,6 +31,25 @@ namespace RestaurantRaterAPI.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetRestaurants()
+        {
+            var restaurants = await _context.Restaurants.ToListAsync();
+            return Ok(restaurants);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetRestaurantById(int id)
+        {
+            var restaurant = await _context.Restaurants.FindAsync(id);
+            
+            if (restaurant == null) {
+                return NotFound();
+            }
+            return Ok(restaurant);
+        }
+
     }
 
 }
