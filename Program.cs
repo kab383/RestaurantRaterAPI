@@ -4,12 +4,13 @@ using RestaurantRaterAPI;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-.ConfigureWebHostDefaults(webBuilder =>
-        {
-            webBuilder.UseUrls("http://localhost:5221", "https://localhost:7229");
-        });
+
+// static IHostBuilder CreateHostBuilder(string[] args) =>
+//         Host.CreateDefaultBuilder(args)
+// .ConfigureWebHostDefaults(webBuilder =>
+//         {
+//             webBuilder.UseUrls("http://localhost:5221", "https://localhost:7229");
+//         });
 
 builder.Services.AddHttpsRedirection(options => options.HttpsPort = 7229);
 builder.Services.AddControllers();
